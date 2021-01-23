@@ -6,7 +6,7 @@
 /*   By: mhufflep <mhufflep@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/23 03:10:06 by mhufflep          #+#    #+#             */
-/*   Updated: 2021/01/23 04:00:14 by mhufflep         ###   ########.fr       */
+/*   Updated: 2021/01/23 10:10:05 by mhufflep         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,18 +15,40 @@
 
 # include <stdio.h>
 # include <sys/time.h>
+# include <pthread.h>
+# include <stdlib.h>
+# include <unistd.h>
 
-# include "ft_atoi.h"
-  
-typedef struct	s_args
+typedef unsigned long long	ull; 
+
+typedef struct				s_args
 {
-	unsigned long long philo_num;
-	unsigned long long time_to_die;
-	unsigned long long time_to_eat;
-	unsigned long long time_to_sleep;
-	unsigned long long number_of_times;
-}				t_args;
+	ull 					philo_num;
+	ull 					time_to_die;
+	ull 					time_to_eat;
+	ull 					time_to_sleep;
+	ull 					number_of_times;
+}							t_args;
+
+typedef struct 				s_data
+{
+	pthread_mutex_t			*forks;
+	pthread_mutex_t			*death;
+	pthread_mutex_t			*print;
+	ull						start_time;
+}							t_data;
+
+typedef struct				s_philo
+{
+	ull						last_eating;
+	t_data					*data;
+	t_args					*args;
+	int						num;
+	int						left;
+	int						right;
+}							t_philo;
 
 
+int	ft_atoi(char *s, ull *number);
 
 #endif

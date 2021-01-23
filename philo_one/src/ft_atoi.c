@@ -1,18 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.h                                          :+:      :+:    :+:   */
+/*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mhufflep <mhufflep@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/01/23 03:31:57 by mhufflep          #+#    #+#             */
-/*   Updated: 2021/01/23 03:32:36 by mhufflep         ###   ########.fr       */
+/*   Created: 2021/01/23 03:29:26 by mhufflep          #+#    #+#             */
+/*   Updated: 2021/01/23 10:44:58 by mhufflep         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_ATOI_H
-# define FT_ATOI_H
+#include "philo_one.h"
 
-int	ft_atoi(char *s, unsigned long long *number);
-
-#endif
+int ft_atoi(char *s, ull *number)
+{
+	*number = 0;
+	while (s && (*s == ' ' || *s == '\n' || *s == '\t'
+			 || *s == '\v' || *s == '\f' || *s == '\r'))
+		s++;
+	while (*s >= '0' && *s <= '9')
+	{
+		*number = *number * 10 + (*s - '0');
+		s++;
+	}
+	return ((*s == '\0' && *(s - 1) >= '0' && *(s - 1) <= '9') ? 0 : -1);
+}
