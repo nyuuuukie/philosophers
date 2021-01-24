@@ -6,13 +6,13 @@
 /*   By: mhufflep <mhufflep@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/23 03:29:26 by mhufflep          #+#    #+#             */
-/*   Updated: 2021/01/23 10:44:58 by mhufflep         ###   ########.fr       */
+/*   Updated: 2021/01/24 14:13:57 by mhufflep         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_one.h"
 
-int ft_atoi(char *s, ull *number)
+int ft_atoi(char *s, t_ull *number)
 {
 	*number = 0;
 	while (s && (*s == ' ' || *s == '\n' || *s == '\t'

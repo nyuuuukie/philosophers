@@ -18,7 +18,7 @@ $(NAME): $(OBJECTS)
 	$(CC) $(CFLAGS) $^ -lpthread -o $@
 
 $(OBJDIR)/%.o : $(SRC_DIR)/%.c
-	$(CC) $(CFLAGS) -c $< $(INCLUDE) -o $@ 
+	$(CC) $(CFLAGS) -c $? $(INCLUDE) -o $@ 
 
 clean:
 	rm -rf $(OBJECTS)
