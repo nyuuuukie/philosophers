@@ -6,7 +6,7 @@
 /*   By: mhufflep <mhufflep@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/23 03:10:06 by mhufflep          #+#    #+#             */
-/*   Updated: 2021/01/24 18:14:17 by mhufflep         ###   ########.fr       */
+/*   Updated: 2021/01/25 04:30:27 by mhufflep         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ typedef struct				s_args
 	t_ull 					time_to_die;
 	t_ull 					time_to_eat;
 	t_ull 					time_to_sleep;
-	t_ull 					number_of_times;
+	t_ull 					eating_count_limit;
 }							t_args;
 
 typedef struct 				s_data
@@ -35,7 +35,9 @@ typedef struct 				s_data
 	pthread_mutex_t			*forks;
 	pthread_mutex_t			*death;
 	pthread_mutex_t			*print;
+	t_ull					is_alive;
 	t_ull					start_time;
+	t_ull					satisfied_count;
 }							t_data;
 
 typedef struct				s_philo
