@@ -6,7 +6,7 @@
 /*   By: mhufflep <mhufflep@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/23 03:10:06 by mhufflep          #+#    #+#             */
-/*   Updated: 2021/01/26 16:54:06 by mhufflep         ###   ########.fr       */
+/*   Updated: 2021/01/26 17:36:43 by mhufflep         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,13 +59,14 @@ void 	destroy_all_mutexes(t_data *data, t_args *args);
 int create_threads(pthread_t *threads, t_philo *philosophers);
 int	join_threads(pthread_t *threads, t_args *args);
 
+/* CYCLE */
 void*	cycle(void *ph);
 
 /* UTILS */
 int	ft_atoi(char *s, t_ull *number);
 int ft_strlen(char *s);
 
-
+/* ARGUMENTS */
 int	get_arguments(int argc, char *argv[], t_args *args);
 
 /* ERRORS */
