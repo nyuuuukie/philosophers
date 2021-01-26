@@ -9,7 +9,7 @@ INCLUDE = -I include
 OBJDIR = .obj
 SRC_DIR = src
 
-SOURCES = main.c ft_atoi.c
+SOURCES = main.c ft_threads.c ft_mutex.c ft_get_arguments.c ft_errors.c ft_atoi.c ft_strlen.c
 OBJECTS = $(addprefix $(OBJDIR)/, $(SOURCES:.c=.o))
 
 all: $(NAME)

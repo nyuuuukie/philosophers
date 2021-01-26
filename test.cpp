@@ -23,6 +23,7 @@ void *serialize(void)
 
 int main(void)
 {
+	int *ptr = (int *)malloc(120);
 	data *d = (data *)serialize();
 	printf("%lu\n", sizeof(*d));
 	return (0);

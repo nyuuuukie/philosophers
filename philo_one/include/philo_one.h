@@ -6,7 +6,7 @@
 /*   By: mhufflep <mhufflep@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/23 03:10:06 by mhufflep          #+#    #+#             */
-/*   Updated: 2021/01/25 04:30:27 by mhufflep         ###   ########.fr       */
+/*   Updated: 2021/01/26 16:54:06 by mhufflep         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,25 @@ typedef struct				s_philo
 	t_ull					eating_count;
 }							t_philo;
 
+/* MUTEXES */
+void 	init_all_mutexes(t_data *data, t_args *args);
+void 	destroy_all_mutexes(t_data *data, t_args *args);
 
+/* THREADS */
+int create_threads(pthread_t *threads, t_philo *philosophers);
+int	join_threads(pthread_t *threads, t_args *args);
+
+void*	cycle(void *ph);
+
+/* UTILS */
 int	ft_atoi(char *s, t_ull *number);
+int ft_strlen(char *s);
+
+
+int	get_arguments(int argc, char *argv[], t_args *args);
+
+/* ERRORS */
+char	*get_error(int code);
+int		print_error(char *msg);
 
 #endif
