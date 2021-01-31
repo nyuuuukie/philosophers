@@ -1,36 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_get_arguments.c                                 :+:      :+:    :+:   */
+/*   ft_time.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mhufflep <mhufflep@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/01/26 10:37:31 by mhufflep          #+#    #+#             */
+/*   Created: 2021/01/26 18:12:07 by mhufflep          #+#    #+#             */
 /*   Updated: 2021/01/26 18:45:04 by mhufflep         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-int	get_arguments(int argc, char *argv[], t_args *args)
+t_ull get_time(void)
 {
-	t_ull	*prms[5];
-	int 	i;
+	struct timeval time;
+	gettimeofday(&time, NULL);
 
-	i = 1;
-	prms[0] = &args->philo_num;
-	prms[1] = &args->time_to_die;
-	prms[2] = &args->time_to_eat;
-	prms[3] = &args->time_to_sleep;
-	prms[4] = &args->eating_count_limit;
-	*prms[4] = 0;
-	while (i < argc)
+	return (time.tv_sec * 1000 + time.tv_usec / 1000);
+}
+
+void	wait_until(t_ull time)
+{
+	while (get_time() < time)
 	{
-		if (ft_strlen(argv[i]) > 10)
-			return (3);	
-		if (ft_atoi(argv[i], prms[i - 1]) == -1)
-			return (1);
-		i++;
+		usleep(50);
 	}
-	return ((args->philo_num < 2) * 2);
 }

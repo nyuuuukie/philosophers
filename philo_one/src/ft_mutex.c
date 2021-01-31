@@ -6,11 +6,11 @@
 /*   By: mhufflep <mhufflep@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/25 16:33:36 by mhufflep          #+#    #+#             */
-/*   Updated: 2021/01/26 10:32:46 by mhufflep         ###   ########.fr       */
+/*   Updated: 2021/01/26 18:45:04 by mhufflep         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo_one.h"
+#include "philosophers.h"
 
 void 	init_all_mutexes(t_data *data, t_args *args)
 {

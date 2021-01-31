@@ -6,11 +6,11 @@
 /*   By: mhufflep <mhufflep@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/23 03:29:26 by mhufflep          #+#    #+#             */
-/*   Updated: 2021/01/24 14:13:57 by mhufflep         ###   ########.fr       */
+/*   Updated: 2021/01/26 18:45:04 by mhufflep         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo_one.h"
+#include "philosophers.h"
 
 int ft_atoi(char *s, t_ull *number)
 {

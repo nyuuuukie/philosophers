@@ -6,11 +6,11 @@
 /*   By: mhufflep <mhufflep@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/25 16:33:10 by mhufflep          #+#    #+#             */
-/*   Updated: 2021/01/26 09:14:08 by mhufflep         ###   ########.fr       */
+/*   Updated: 2021/01/26 18:57:02 by mhufflep         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo_one.h"
+#include "philosophers.h"
 
 int create_threads(pthread_t *threads, t_philo *philosophers)
 {

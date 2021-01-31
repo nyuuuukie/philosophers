@@ -6,11 +6,11 @@
 /*   By: mhufflep <mhufflep@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/26 10:34:42 by mhufflep          #+#    #+#             */
-/*   Updated: 2021/01/26 16:53:55 by mhufflep         ###   ########.fr       */
+/*   Updated: 2021/01/26 18:45:04 by mhufflep         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo_one.h"
+#include "philosophers.h"
 
 char *get_error(int code)
 {
