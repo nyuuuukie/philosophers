@@ -9,30 +9,25 @@ INCLUDE = -I include
 OBJDIR = .obj
 SRC_DIR = src
 
-SOURCES = 	main.c \
-			ft_time.c \
-			ft_atoi.c \
-			ft_cycle.c \
-			ft_philo.c \
-			ft_mutex.c \
-			ft_strlen.c \
-			ft_errors.c \
-			ft_threads.c \
-			ft_print_status.c \
- 			ft_get_arguments.c 
+SOURCES = 	cycle.c  data.c   error.c  main.c   mutex.c \
+			parser.c philo.c  print.c  thread.c time.c \
+			utils.c
 
 OBJECTS = $(addprefix $(OBJDIR)/, $(SOURCES:.c=.o))
 
-all: $(NAME)
+all: objdir $(NAME)
+
+objdir:
+	@if ! [ -d ${OBJDIR} ] ; then mkdir ${OBJDIR} ; fi
 
 $(NAME): $(OBJECTS)
 	$(CC) $(CFLAGS) $^ -lpthread -o $@
 
-$(OBJDIR)/%.o : $(SRC_DIR)/%.c
+$(OBJDIR)/%.o: $(SRC_DIR)/%.c
 	$(CC) $(CFLAGS) -c $? $(INCLUDE) -o $@ 
 
 clean:
-	rm -rf $(OBJECTS)
+	rm -rf $(OBJDIR)
 
 fclean: clean
 	rm -rf $(NAME)
