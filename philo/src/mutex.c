@@ -11,9 +11,12 @@ int 	init_mutexes(t_data *data, t_ull *args)
 		return (1);
 	if (pthread_mutex_init(&data->count->m, NULL))
 		return (1);
+	if (pthread_mutex_init(&data->time->m, NULL))
+		return (1);
 	data->waiter->lock = 0;
 	data->print->lock = 0;
 	data->count->lock = 0;
+	data->time->lock = 0;
 	while (i < args[0])
 	{
 		data->forks[i].lock = 0;
@@ -40,6 +43,8 @@ int 	destroy_mutexes(t_data *data, t_ull *args)
 	if (pthread_mutex_destroy(&data->waiter->m))
 		return (1);
 	if (pthread_mutex_destroy(&data->count->m))
+		return (1);
+	if (pthread_mutex_destroy(&data->time->m))
 		return (1);
 	return (0);
 }

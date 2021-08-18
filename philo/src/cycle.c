@@ -1,9 +1,11 @@
 #include "philo.h"
 
 int lock(t_mutex *mutex)
-{	
+{
+
 	pthread_mutex_lock(&mutex->m);
 	mutex->lock = 1;
+	
 	return (0);
 }
 
@@ -39,21 +41,8 @@ int get_next(t_philo *philo)
 	return (id);
 }
 
-void take_chopsticks(t_philo *philo)
-{
-	
-	lock(&philo->data->forks[philo->left]);
-	print_locked(philo, "has taken a chopstick");
-	lock(&philo->data->forks[philo->right]);
-	print_locked(philo, "has taken a chopstick");
-	
-	lock(philo->data->waiter);
-	philo->data->prime = get_next(philo);
-	unlock(philo->data->waiter);
-	
-}
 
-void release_chopsticks(t_philo *philo)
+void put_chopsticks(t_philo *philo)
 {
 	//lock(philo->data->waiter);
 	if (philo->num % 2 == 0)
@@ -68,6 +57,38 @@ void release_chopsticks(t_philo *philo)
 	}
 	//unlock(philo->data->waiter);
 }
+
+int	take_chopstick(t_philo *philo, int num)
+{
+	lock(&philo->data->forks[num]);
+	print_locked(philo, "has taken a chopstick");
+	if (!philo->data->alive)
+	{
+		put_chopsticks(philo);
+		return (1);
+	}
+	return (0);
+}
+
+int take_chopsticks(t_philo *philo)
+{
+	if (philo->num % 2)
+	{
+		if (take_chopstick(philo, philo->left))
+			return (1);
+		if (take_chopstick(philo, philo->right))
+			return (1);
+	}
+	else
+	{
+		if (take_chopstick(philo, philo->right))
+			return (1);
+		if (take_chopstick(philo, philo->left))
+			return (1);
+	}
+	return (0);
+}
+
 
 int	count_meals(t_philo *philo)
 {
@@ -94,30 +115,39 @@ void*	cycle(void *ph)
 	t_philo	*philo;
 
 	philo = (t_philo *)ph;
-	//if (philo->num % 2)
-	//	usleep(philo->data->args[1] / 2);
 	while (philo->data->alive)
 	{
 		if (philo->num == philo->data->prime)
 		{
-			take_chopsticks(philo);
+			if (take_chopsticks(philo))
+				break ;
 
-			//lock(philo->data->waiter);
+			lock(philo->data->waiter);
+			philo->data->prime = get_next(philo);
+			unlock(philo->data->waiter);
+
+			lock(philo->data->time);
 			philo->last_time = get_time();
-			//unlock(philo->data->waiter);
+			unlock(philo->data->time);
 			
 			print_locked(philo, "is eating");
-			delay(philo->data->args[2]);
+			if (delay(philo->data, philo->data->args[2]))
+			{
+				put_chopsticks(philo);
+				break ;
+			}
 			
-			release_chopsticks(philo);
+			put_chopsticks(philo);
 			
 			if (count_meals(philo))
 				break;
 
 			print_locked(philo, "is sleeping");
-			delay(philo->data->args[3]);
+			if (delay(philo->data, philo->data->args[3]))
+				break ;
 			print_locked(philo, "is thinking");
 		}
+		//usleep(100);
 	}
 	return (NULL);
 }

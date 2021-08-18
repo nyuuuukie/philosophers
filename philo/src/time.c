@@ -1,6 +1,6 @@
 #include "philo.h"
 
-t_ull get_time(void)
+time_t get_time(void)
 {
 	struct timeval time;
 
@@ -27,13 +27,15 @@ void	delay_mcs(t_ull time)
 	}
 }
 
-int	delay(t_ull time)
+int	delay(t_data *data, t_ull time)
 {
 	t_ull current;
 
 	current = get_time();
 	while (get_time() - current < time)
 	{
+		if (!data->alive)
+			return (1);
 		usleep(10);
 	}
 	return (0);

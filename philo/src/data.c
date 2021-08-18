@@ -24,8 +24,9 @@ static t_data *alloc_data(t_ull *args)
 		data->forks = malloc(sizeof(t_mutex) * args[0]);
 		data->print = malloc(sizeof(t_mutex));
 		data->count = malloc(sizeof(t_mutex));
+		data->time = malloc(sizeof(t_mutex));
 		data->waiter = malloc(sizeof(t_mutex));
-		if (!data->forks || !data->print || 
+		if (!data->time || !data->forks || !data->print || 
 			!data->waiter || !data->count)
 			return (clear_data(data));
 	}

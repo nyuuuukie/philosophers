@@ -7,21 +7,19 @@ void	*monitor(void *ph)
 
 	philo = (t_philo *)ph;
 	data = philo->data;
+	lock(data->time);
 	while (data->alive)
 	{
-		if (data->satisfied == data->args[4])
-		{
-			data->alive = 0;
-			return (NULL);
-		}
-		
-		lock(data->waiter);
-		if (get_time() - philo->last_time > data->args[1])
+		if (get_time() - philo->last_time > (time_t)data->args[1])
 		{
 			print_locked(philo, "died");
 			data->alive = 0;
+			break;
 		}
-		unlock(data->waiter);
+		unlock(data->time);
+		usleep(50);
+		lock(data->time);
 	}
+	unlock(data->time);
 	return (NULL);
 }

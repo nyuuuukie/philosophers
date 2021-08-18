@@ -31,6 +31,7 @@ typedef struct 	s_data
 	t_mutex		*print;
 	t_mutex		*count;
 	t_mutex		*waiter;
+	t_mutex		*time;
 	int			alive;
 	int			prime;
 	t_ull		satisfied;
@@ -64,8 +65,8 @@ int		print_error(char *title);
 void	print_locked(t_philo *philo, const char *msg);
 
 //time.c
-t_ull	get_time(void);
-int		delay(t_ull time);
+time_t	get_time(void);
+int		delay(t_data *data, t_ull time);
 void delay_mcs(t_ull time);
 
 //mutex.c
