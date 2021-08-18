@@ -1,54 +1,45 @@
 #include "philo.h"
 
-#ifdef LINUX
-
-int is_locked(pthread_mutex_t *mutex)
-{
-	return (mutex->__data.__lock);
-}
-
-#else
-
-int is_locked(pthread_mutex_t *mutex)
-{
-	return (mutex->__opaque[18] & mutex->__opaque[24]);
-}
-
-#endif
-
-int 	init_mutexes(t_data *data, int *args)
+int 	init_mutexes(t_data *data, t_ull *args)
 {
 	t_ull i;
 
 	i = 0;
-	if (pthread_mutex_init(data->death, NULL))
+	if (pthread_mutex_init(&data->print->m, NULL))
 		return (1);
-	if (pthread_mutex_init(data->print, NULL))
+	if (pthread_mutex_init(&data->waiter->m, NULL))
 		return (1);
-	// if (pthread_mutex_lock(data->death))
-	// 	return (1);
+	if (pthread_mutex_init(&data->count->m, NULL))
+		return (1);
+	data->waiter->lock = 0;
+	data->print->lock = 0;
+	data->count->lock = 0;
 	while (i < args[0])
 	{
-		if (pthread_mutex_init(&data->forks[i], NULL))
+		data->forks[i].lock = 0;
+		if (pthread_mutex_init(&data->forks[i].m, NULL))
 			return (1);
 		i++;
 	}
 	return (0);
 }
 
-int 	destroy_mutexes(t_data *data, int *args)
+int 	destroy_mutexes(t_data *data, t_ull *args)
 {
-	int i;
+	t_ull i;
 
 	i = 0;
 	while (i < args[0])
     {
-		if (pthread_mutex_destroy(&data->forks[i]))
+		if (pthread_mutex_destroy(&data->forks[i].m))
 			return (1);
 		i++;
     }
-	if (pthread_mutex_destroy(data->print))
+	if (pthread_mutex_destroy(&data->print->m))
 		return (1);
-	if (pthread_mutex_destroy(data->death))
+	if (pthread_mutex_destroy(&data->waiter->m))
 		return (1);
+	if (pthread_mutex_destroy(&data->count->m))
+		return (1);
+	return (0);
 }

@@ -1,36 +1,36 @@
 #include "philo.h"
 
-int check_args(int argc, int *args)
+int check_args(int argc, t_ull *args)
 {
 	int i;
 
 	i = 0;
-	if (args[0] < 2)
-		return (errno(7));
 	while (i < argc)
 	{
 		if (args[i] == 0)
 			return (errno(4));
 		i++;
 	}
+	if (argc == 4)
+		args[4] = -1;
 	return (0);
 }
 
-int parse_num(char *s, int *num)
+int parse_num(char *s, t_ull *num)
 {
-	unsigned long long res;
+	long long res;
 
 	res = 0;
 	while (*s == ' ' || *s == '\n')
 		s++;
 	if (*s == '\0')
-		return (-1);
+		return (1);
 	while (*s)
 	{
 		if (*s < '0' || *s > '9')
-			return (-2);
+			return (2);
 		if (res * 10 + (*s - '0') < 0)
-			return (-3);
+			return (3);
 		res = res * 10 + (*s - '0');
 		s++;
 	}
@@ -38,7 +38,7 @@ int parse_num(char *s, int *num)
 	return (0);
 }
 
-int	get_args(int argc, char *argv[], int *args)
+int	get_args(int argc, char *argv[], t_ull *args)
 {
 	int i;
 	int res;

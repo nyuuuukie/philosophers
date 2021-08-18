@@ -1,9 +1,9 @@
 .PHONY: all re fclean clean obj_dir
 
-NAME = philo_one
+NAME = philo
 
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -g
 INCLUDE = -I include
 
 OBJDIR = .obj
@@ -11,7 +11,7 @@ SRC_DIR = src
 
 SOURCES = 	cycle.c  data.c   error.c  main.c   mutex.c \
 			parser.c philo.c  print.c  thread.c time.c \
-			utils.c
+			utils.c monitor.c
 
 OBJECTS = $(addprefix $(OBJDIR)/, $(SOURCES:.c=.o))
 
