@@ -1,111 +1,101 @@
-#include <pthread.h>
-#include <stdio.h>
-#include <unistd.h>
-#include <stdlib.h>
-#include <string.h>
-#include <sys/time.h>
+#ifndef PHILO_H
+# define PHILO_H
 
-#ifndef PHILO_STRUCT_H
-# define PHILO_STRUCT_H
+# include <pthread.h>
+# include <stdio.h>
+# include <unistd.h>
+# include <stdlib.h>
+# include <string.h>
+# include <sys/time.h>
 
 typedef unsigned long long	t_ull;
-typedef unsigned long t_ul;
-//typedef pthread_mutex_t 	t_mutex;
+typedef unsigned long		t_ul;
 
-typedef enum e_res
+typedef struct s_mutex
 {
-	ACCEPT = 0,
-	REJECT = 1
-}			t_res;
-
-typedef struct	s_mutex
-{
-	pthread_mutex_t m;
-	int lock;
+	pthread_mutex_t	m;
+	int				lock;
 }				t_mutex;
 
-typedef struct 	s_data
+typedef struct s_data
 {
 	t_ull		*args;
 	t_mutex		*forks;
 	t_mutex		*print;
 	t_mutex		*count;
-	t_mutex		*waiter;
+	t_mutex		*order;
 	t_mutex		*time;
 	int			alive;
-	int			prime;
+	int			next;
 	t_ull		satisfied;
-	time_t		start_time;
+	time_t		start_t;
+	int			(*next_ph)(int, int);
 }				t_data;
 
-typedef struct		s_philo
+typedef struct s_philo
 {
 	t_data		*data;
 	int			num;
 	int			left;
 	int			right;
-	time_t		last_time;
+	time_t		meal_t;
 	t_ul		meals;
 }				t_philo;
 
-//t_philo *philo_ref(t_philo *philo);
-//int	is_died(t_philo *philo);
+// next.c
 
-//void	print_die(t_philo *philo, const char *msg);
-int lock(t_mutex *mutex);
-int unlock(t_mutex *mutex);
-
-//int	try_lock_forks(t_philo *philo);
+int		next(t_philo *philo);
+int		next_odd(int id, int max);
+int		next_even(int id, int max);
 
 char	*get_error_msg(int code);
 int		errno(int code);
 int		print_error(char *title);
 
-//print.c
+// print.c
 void	print_locked(t_philo *philo, const char *msg);
+void	print_die( t_philo *philo, const char *msg);
 
-//time.c
-time_t	get_time(void);
+// time.c
+time_t	timer(void);
 int		delay(t_data *data, t_ull time);
-void delay_mcs(t_ull time);
 
-//mutex.c
-//int		is_locked(pthread_mutex_t *mutex);
-
-//parser.c
+// parser.c
 int		check_args(int argc, t_ull *args);
 int		parse_num(char *s, t_ull *num);
 int		get_args(int argc, char *argv[], t_ull *args);
 
+// chopsticks.c
+void	put_chopsticks(t_philo *philo);
+int		take_chopsticks(t_philo *philo);
+int		take_chopstick(t_philo *philo, int num);
 
-/* MUTEXES */
+// mutex.c
+int		lock(t_mutex *mutex);
+int		unlock(t_mutex *mutex);
 int		init_mutexes(t_data *data, t_ull *args);
 int		destroy_mutexes(t_data *data, t_ull *args);
 
-/* THREADS */
-int create_threads(pthread_t *threads, t_ull argc, t_philo *phs, void *(*func)(void *));
-//int		create_threads(pthread_t *threads, t_philo *philos);
+// thread.c
+int		alloc_threads(pthread_t **arr, int num);
+int		create_threads(pthread_t *ths, t_ull ac,
+			t_philo *phs, void *(*f)(void *));
 int		join_threads(pthread_t *threads, t_ull args);
 
-/* PHILOSOPHERS */
+// philos.c
 int		init_philos(t_philo *philos, t_data *data, t_ull *args);
 int		destroy_philos(t_philo *philos, t_ull *args);
 t_data	*prepare_data(t_ull *args);
 void	*clear_data(t_data *data);
 
-void	print_eat(t_philo *philo, const char *msg);
-
-
 /* CYCLE */
-void*	cycle(void *ph);
-void*	monitor(void *ph);
-
-//void*	dead_check(void *ph);
-//int		eating(t_philo *philo);
-//int		sleeping(t_philo *philo);
-//int		thinking(t_philo *philo);
+void	*cycle(void *ph);
+void	*monitor(void *ph);
+int		eating(t_philo *philo);
+int		sleeping(t_philo *philo);
+int		thinking(t_philo *philo);
 
 /* UTILS */
-int 	findlen(char *s);
+int		findlen(char *s);
 
 #endif

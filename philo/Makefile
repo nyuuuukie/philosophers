@@ -11,7 +11,7 @@ SRC_DIR = src
 
 SOURCES = 	cycle.c  data.c   error.c  main.c   mutex.c \
 			parser.c philo.c  print.c  thread.c time.c \
-			utils.c monitor.c
+			utils.c monitor.c next.c chopsticks.c
 
 OBJECTS = $(addprefix $(OBJDIR)/, $(SOURCES:.c=.o))
 

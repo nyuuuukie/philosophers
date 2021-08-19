@@ -4,8 +4,8 @@ void	*clear_data(t_data *data)
 {
 	if (data && data->forks != NULL)
 		free(data->forks);
-	if (data && data->waiter != NULL)
-		free(data->waiter);
+	if (data && data->order != NULL)
+		free(data->order);
 	if (data && data->print != NULL)
 		free(data->print);
 	if (data != NULL)
@@ -13,7 +13,7 @@ void	*clear_data(t_data *data)
 	return (NULL);
 }
 
-static t_data *alloc_data(t_ull *args)
+static t_data	*alloc_data(t_ull *args)
 {
 	t_data	*data;
 
@@ -25,9 +25,9 @@ static t_data *alloc_data(t_ull *args)
 		data->print = malloc(sizeof(t_mutex));
 		data->count = malloc(sizeof(t_mutex));
 		data->time = malloc(sizeof(t_mutex));
-		data->waiter = malloc(sizeof(t_mutex));
-		if (!data->time || !data->forks || !data->print || 
-			!data->waiter || !data->count)
+		data->order = malloc(sizeof(t_mutex));
+		if (!data->time || !data->forks || !data->print
+			|| !data->order || !data->count)
 			return (clear_data(data));
 	}
 	return (data);
@@ -41,10 +41,10 @@ t_data	*prepare_data(t_ull *args)
 	if (data)
 	{
 		data->alive = 1;
-		data->prime = 1;
+		data->next = 1;
 		data->args = args;
 		if (init_mutexes(data, args))
 			return (clear_data(data));
-	}	
+	}
 	return (data);
 }
