@@ -7,7 +7,7 @@ int	alloc_threads(pthread_t **arr, int num)
 	tmp = malloc(sizeof(pthread_t) * num);
 	if (!tmp)
 		return (1);
-	memset(tmp, 0, sizeof(tmp));
+	memset(tmp, 0, sizeof(pthread_t) * num);
 	*arr = tmp;
 	return (0);
 }
