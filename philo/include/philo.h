@@ -19,35 +19,40 @@ typedef struct s_mutex
 
 typedef struct s_data
 {
+	int			next;
+	int			alive;
 	t_ull		*args;
-	t_mutex		*forks;
+	t_mutex		*time;
 	t_mutex		*print;
+	t_mutex		*forks;
 	t_mutex		*count;
 	t_mutex		*order;
-	t_mutex		*time;
-	int			alive;
-	int			next;
-	t_ull		satisfied;
 	time_t		start_t;
-	int			(*next_ph)(int, int);
+	t_ull		satisfied;
 }				t_data;
 
 typedef struct s_philo
 {
-	t_data		*data;
 	int			num;
 	int			left;
 	int			right;
-	time_t		meal_t;
 	t_ul		meals;
+	t_data		*data;
+	time_t		meal_t;
 }				t_philo;
 
-// next.c
 
+// parser.c
+int		check_args(int argc, t_ull *args);
+int		parse_num(char *s, t_ull *num);
+int		get_args(int argc, char *argv[], t_ull *args);
+
+// next.c
 int		next(t_philo *philo);
 int		next_odd(int id, int max);
 int		next_even(int id, int max);
 
+// error.c
 char	*get_error_msg(int code);
 int		errno(int code);
 int		print_error(char *title);
@@ -59,11 +64,6 @@ void	print_die( t_philo *philo, const char *msg);
 // time.c
 time_t	timer(void);
 int		delay(t_data *data, t_ull time);
-
-// parser.c
-int		check_args(int argc, t_ull *args);
-int		parse_num(char *s, t_ull *num);
-int		get_args(int argc, char *argv[], t_ull *args);
 
 // chopsticks.c
 void	put_chopsticks(t_philo *philo);
@@ -88,14 +88,14 @@ int		destroy_philos(t_philo *philos, t_ull *args);
 t_data	*prepare_data(t_ull *args);
 void	*clear_data(t_data *data);
 
-/* CYCLE */
+// cycle.c
 void	*cycle(void *ph);
 void	*monitor(void *ph);
 int		eating(t_philo *philo);
 int		sleeping(t_philo *philo);
 int		thinking(t_philo *philo);
 
-/* UTILS */
+// utils.c
 int		findlen(char *s);
 
 #endif
