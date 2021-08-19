@@ -18,7 +18,7 @@ int	check_args(int argc, t_ull *args)
 
 int	parse_num(char *s, t_ull *num)
 {
-	long long	res;
+	int	res;
 
 	res = 0;
 	while (*s == ' ' || *s == '\n')
